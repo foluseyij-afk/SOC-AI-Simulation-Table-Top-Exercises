@@ -9,7 +9,12 @@ interface FinalFeedbackProps {
 }
 
 const FinalFeedback: React.FC<FinalFeedbackProps> = ({ result, onRestart, scenario }) => {
-  const percentage = Math.round((result.totalScore / result.maxPossibleScore) * 100);
+  
+const rawPercentage =
+  (result.totalScore / result.maxPossibleScore) * 100;
+
+const percentage = Math.max(0, Math.min(100, Math.round(rawPercentage)));
+
   
   const getGradeColor = () => {
     if (percentage >= 90) return 'text-green-400';
@@ -39,7 +44,6 @@ const FinalFeedback: React.FC<FinalFeedbackProps> = ({ result, onRestart, scenar
           <div className="mt-10 flex flex-col items-center">
             <div className="relative">
               <span className={`text-8xl font-black mono leading-none ${getGradeColor()}`}>{percentage}%</span>
-              <span className="absolute -right-8 bottom-2 text-2xl font-bold text-slate-600">/100</span>
             </div>
             <span className="mt-4 text-xs font-bold text-slate-500 uppercase tracking-[0.4em]">Final Readiness Rating</span>
           </div>
