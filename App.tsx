@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<SimulationStep | null>(null);
   const [simState, setSimState] = useState<SimulationState>({
     currentStep: 0,
-    maxSteps: 5,
+    maxSteps: 10,
     history: [],
     overallContext: '',
     threatLevel: 20
@@ -45,7 +45,7 @@ const App: React.FC = () => {
       setCurrentStep(firstStep);
       setSimState({
         currentStep: 1,
-        maxSteps: 5,
+        maxSteps: 10,
         history: [],
         overallContext: firstStep.context,
         threatLevel: 20
@@ -84,12 +84,20 @@ const App: React.FC = () => {
       setIsLoading(true);
       try {
         const assessment = await generateFinalAssessment(difficulty, threatType, nextState);
+        
+        const maxPossibleScore = simState.maxSteps * 10;
         const totalScore = newHistory.reduce((sum, h) => sum + h.points, 0);
+        
+        // Final normalized percentage (0–100)
+        const finalPercentage = Math.round((totalScore / maxPossibleScore) * 100);
+        
         setFinalResult({
           totalScore,
-          maxPossibleScore: simState.maxSteps * 10,
+          maxPossibleScore,
+          finalPercentage,
           ...assessment
         });
+
         setAppState('RESULT');
       } catch (err) {
         setError("Error processing debrief.");
@@ -180,7 +188,7 @@ const App: React.FC = () => {
              <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-slate-100 mb-2 mono">ADJUSTING REALITY...</h2>
+        <h2 className="text-2xl font-bold text-slate-100 mb-2 mono">ADJUSTING SCENARIO...</h2>
         <p className="text-slate-400 max-w-md text-center italic">
           "Simulating consequences and projecting next-stage threat vectors based on your actions."
         </p>
@@ -199,7 +207,7 @@ const App: React.FC = () => {
               </svg>
             </div>
             <div>
-              <h1 className="text-lg font-black uppercase tracking-tight">SOC SHIELD</h1>
+              <h1 className="text-lg font-black uppercase tracking-tight">SOC SIMULATION</h1>
               <p className="text-[10px] text-blue-400 mono font-bold uppercase tracking-[0.2em]">{difficulty} // {threatType}</p>
             </div>
           </div>
