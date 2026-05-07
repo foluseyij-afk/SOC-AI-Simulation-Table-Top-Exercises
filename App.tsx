@@ -122,7 +122,7 @@ const App: React.FC = () => {
       <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
         <div className="max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
           <div className="text-center mb-10">
-            <h1 className="text-4xl font-black text-blue-500 mb-2">SOC SHIELD: BRIEFING ROOM</h1>
+            <h1 className="text-4xl font-black text-blue-500 mb-2">SOC SIMULATION: SITUATION ROOM</h1>
             <p className="text-slate-400">Configure your simulation environment and threat parameters.</p>
           </div>
 
