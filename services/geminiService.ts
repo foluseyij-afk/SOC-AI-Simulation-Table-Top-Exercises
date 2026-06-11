@@ -65,7 +65,7 @@ export async function startSimulation(difficulty: Difficulty, threat: ThreatType
   3. Ensure complexity matches ${difficulty}.`;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-3-pro-preview',
+    model: 'gemini-1.5-flash',
     contents: prompt,
     config: {
       responseMimeType: "application/json",
@@ -104,7 +104,7 @@ export async function getNextStep(
   If this is Step ${state.maxSteps}, set isFinal to true.`;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-3-pro-preview',
+    model: 'gemini-1.5-flash',
     contents: prompt,
     config: {
       responseMimeType: "application/json",
@@ -148,7 +148,7 @@ export async function generateFinalAssessment(
   };
 
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-1.5-flash-pro',
     contents: prompt,
     config: {
       responseMimeType: "application/json",
